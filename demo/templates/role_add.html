@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色添加</title>
+    <style>
+        .con{
+        color:red;
+        }
+    </style>
+</head>
+<body>
+<h3>角色添加</h3>
+ <form action="/role/add/" method="post">
+  <label for="name">name:</label>
+  <input type="text" name="name" value="" id="name">
+    <br>
+    <span class="con">{{ error }}</span>
+     <br>
+    <input type="submit" value="提交" />
+ </form>
+    <a href="/role/">
+    <button> 返回 </button>
+    </a>
+
+</body>
+</html>
+

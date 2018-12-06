@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物料添加</title>
+    <style>
+        .con{
+        color:red;
+        }
+    </style>
+</head>
+<body>
+<h3>物料添加</h3>
+ <form  action="/item/add/" method="post">
+  <label for="nr">nr:</label>
+  <input type="text" name="nr" value="{{ data.nr }}" id="password">
+  <label for="name">name:</label>
+  <input type="text" name="name" value="{{ data.name }}" id="name">
+  <label for="barcode">barcode:</label>
+  <input type="text" name="barcode" value="{{ data.barcode }}" id="barcode">
+    <br>
+    <span class="con">{{ error }}</span>
+     <br>
+    <input type="submit" value="提交" />
+ </form>
+    <a href="/item/">
+    <button> 返回 </button>
+    </a>
+
+</body>
+</html>
+
+

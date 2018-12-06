@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户角色</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+ <script>
+       function GetUrlByParamName(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var URL =  decodeURI(window.location.search);
+        var r = URL.substr(1).match(reg);
+        if(r!=null){
+            //decodeURI() 函数可对 encodeURI() 函数编码过的 URI 进行解码
+            return  decodeURI(r[2]);
+        };
+        return null;
+    };
+    //页面加载后立即执行
+    window.onload=function(){
+//使用GetUrlByParamName()方法获取url中参数名为questionnaireName的参数内容
+       
+        var msg = GetUrlByParamName("msg");
+        if (msg)
+      {
+        alert(msg);
+      }
+    }
+</script>
+
+
+</head>
+<body>
+<h3>用户角色</h3>
+<table border="1">
+      <tr>
+        <th>用户</th>
+        <th>角色</th>
+        <th>操作</th>
+      </tr>
+
+    {% for i in data %}
+        <tr>
+
+        <th><input value="{{ i.user }}" readonly></th>
+        <th>
+            {% for k,v in all_role_dict.items %}
+
+                    {% if v in i.role %}
+                    <input type="checkbox" value="{{ k }}" name="{{ i.id }}" checked>{{ v }}
+                    {% else %}
+                     <input type="checkbox" value="{{ k }}" name="{{ i.id }}">{{ v }}
+                {% endif %}
+            {% endfor %}
+
+        </th>
+        <th>
+            <input type="button" value="提交" id="{{ i.id }}" onclick="Edit({{ i.id }})"/>
+        </th>
+      </tr>
+    {% endfor %}
+</table>
+</body>
+<script>
+
+        Edit = function (UserId) {
+{#             var chenked=$("input[type='checkbox']:checked").val([]);  //直接获取checkbox值的方法,将其放到数组中#}
+             var checked=$('input[name='+UserId+']:checked').val([]);
+             var roles_arr = [];
+
+             for(var i=0;i<checked.length;i++) {
+                 roles_arr.push(checked[i].value)
+             }
+         $.ajax({
+        url: '/user_role/' ,
+        type: 'application/json',
+        method: 'post',
+         data :{
+            "user_id":UserId,
+        "roles_arr":roles_arr.join(',')
+         },
+        success: function (data) {
+            // 填充数据
+            if (data.result) {
+                console.log('data.result');
+            }
+           console.log(roles_arr);
+        },
+        error: function (err) {
+            alert(err);
+            console.log(roles_arr);
+            console.log("hello");
+        }
+    })}
+
+
+</script>
+</html>

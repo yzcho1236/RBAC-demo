@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户编辑</title>
+    <style>
+        .con{
+        color:red;
+        }
+    </style>
+</head>
+<body>
+<h3>用户编辑</h3>
+ <form action="/user/edit/"  method="post">
+  <label for="id">id:</label>
+  <input type="text" name="id" value="{{ data.id }}" id="id" readonly>
+  <label for="username">username:</label>
+  <input type="text" name="username" value="{{ data.username }}" id="username">
+  <label for="is_superuser">is_superuser:</label>
+  <input type="text" name="is_superuser" value="{{ data.is_superuser }}" id="is_superuser">
+    <br>
+    <span class="con">{{ error }}</span>
+     <br>
+    <input type="submit" value="提交"/>
+ </form>
+    <a href="/user/">
+    <button> 返回 </button>
+    </a>
+
+</body>
+</html>
+

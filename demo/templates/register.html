@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .con{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<h3>用户注册</h3>
+ <form method="post">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="username">用户名:</label>
+  <input type="text" name="username" value="{{ username }}" id="username"><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="password1">密码:</label>
+  <input type="password" name="password1" value="{{ password1 }}" id="password1"><br>
+  <label for="password">再次输入密码:</label>
+  <input type="password" name="password2" value="{{ password2 }}" id="password2"><br>
+    <br>
+     <spn class="con">{{ error }}</spn>
+     <br>
+  <input type="submit" value="注册" onclick="Register()"/>
+ </form>
+
+</body>
+</html>
+
+<script>
+    Register = function () {
+         $.ajax({
+        url: '/register/' ,
+        type: 'application/json',
+        method: 'post',
+        success: function (data) {
+            // 填充数据
+            if (data.result) {
+                console.log('data.result');
+            }
+        },
+        error: function (err) {
+            alert(err);
+        }
+    })
+    }
+</script>

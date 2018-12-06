@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色权限编辑</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+ <script>
+       function GetUrlByParamName(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var URL =  decodeURI(window.location.search);
+        var r = URL.substr(1).match(reg);
+        if(r!=null){
+            //decodeURI() 函数可对 encodeURI() 函数编码过的 URI 进行解码
+            return  decodeURI(r[2]);
+        };
+        return null;
+    };
+    //页面加载后立即执行
+    window.onload=function(){
+//使用GetUrlByParamName()方法获取url中参数名为questionnaireName的参数内容
+       
+        var msg = GetUrlByParamName("msg");
+        if (msg)
+      {
+        alert(msg);
+      }
+    }
+</script>
+
+</head>
+<body>
+<h3>用户角色编辑</h3>
+{# onsubmit 在表单提交时触发 #}
+ <form onsubmit="Edit()" action="/role_permission/edit/" method="post">
+  <input type="hidden" name="id" value="{{ id }}" id="id">
+ <br>
+    <label for="role">角色:</label>
+  <input type="text" name="role" value="{{ role }}" id="role">
+ <br>
+  <label for="permission">权限:</label>
+     <th name="permission">
+         {% for k,v in all_perm_dict.items %}
+
+            {% if v in perms_list %}
+                <input type="checkbox" value="{{ k }}" name="{{ id }}" checked>{{ v }}
+            {% else %}
+                <input type="checkbox" value="{{ k }}" name="{{ id }}">{{ v }}
+            {% endif %}
+         {% endfor %}
+
+  <input type="hidden" name="perms_arr" value="" id="perms_arr">
+</th>
+
+    <br>
+    <span class="con">{{ error }}</span>
+     <br>
+    <input type="submit" value="提交"/>
+ </form>
+
+
+</body>
+<script>
+
+        Edit = function () {
+            var checked = $("input[type='checkbox']:checked").val([]);  //直接获取checkbox值的方法,将其放到数组中
+{#                         var checked=$('input[name='+UserId+']:checked').val([]);#}
+            var perms_arr = [];
+
+            for (var i = 0; i < checked.length; i++) {
+                perms_arr.push(checked[i].value)
+            }
+            document.getElementById('perms_arr').value = perms_arr;
+        }
+
+</script>
+</html>

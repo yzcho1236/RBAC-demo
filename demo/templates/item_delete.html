@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物料删除</title>
+    <style>
+        .con{
+        color:red;
+        }
+    </style>
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+ <script>
+       function GetUrlByParamName(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var URL =  decodeURI(window.location.search);
+        var r = URL.substr(1).match(reg);
+        if(r!=null){
+            //decodeURI() 函数可对 encodeURI() 函数编码过的 URI 进行解码
+            return  decodeURI(r[2]);
+        };
+        return null;
+    };
+    //页面加载后立即执行
+    window.onload=function(){
+//使用GetUrlByParamName()方法获取url中参数名为questionnaireName的参数内容
+       
+        var msg = GetUrlByParamName("msg");
+        if (msg)
+      {
+        alert(msg);
+      }
+    }
+</script>
+
+
+</head>
+<body>
+<h3>物料删除</h3>
+ <form method="post">
+  <label for="id">id:</label>
+  <input type="text" name="id" value="{{ data.id }}" id="id" readonly>
+  <label for="nr">nr:</label>
+  <input type="text" name="nr" value="{{ data.nr }}" id="password" readonly>
+  <label for="name">name:</label>
+  <input type="text" name="name" value="{{ data.name }}" id="name" readonly>
+  <label for="barcode">barcode:</label>
+  <input type="text" name="barcode" value="{{ data.barcode }}" id="barcode" readonly>
+    <br>
+    <span class="con">{{ error }}</span>
+     <br>
+    <input type="button" value="提交" onclick="Edit()"/>
+ </form>
+    <a href="/item/">
+    <button> 返回 </button>
+    </a>
+
+</body>
+</html>
+
+<script>
+    Edit = function () {
+         $.ajax({
+        url: '/item/delete/' ,
+        type: 'application/json',
+        method: 'post',
+        success: function (data) {
+            // 填充数据
+            if (data.result) {
+                console.log('data.result');
+            }
+        },
+        error: function (err) {
+            alert(err);
+        }
+    });
+         return false;
+    }
+</script>
+
